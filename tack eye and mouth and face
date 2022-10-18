@@ -1,0 +1,27 @@
+import face_recognition
+import numpy as np
+import cv2
+
+image = cv2.imread('./image/fah1.jpg')
+h, w, c = image. shape
+face_locations = face_recognition.face_locations (image) 
+face_landmarks_list = face_recognition.face_landmarks(image) 
+left_eye_poly = np.array(face_landmarks_list[0]['left_eye']).reshape((-1,1,2))
+right_eye_poly = np.array(face_landmarks_list[0]['right_eye']).reshape((-1,1,2))
+top_lip_poly = np.array(face_landmarks_list[0]['top_lip']).reshape((-1,1,2))
+bottom_lip_poly = np.array(face_landmarks_list[0]['bottom_lip']).reshape((-1,1,2))
+
+(top, right, bottom, left) = face_locations[0]
+cv2.rectangle(image, (left, top), (right, bottom), (255,0,0), 2) 
+cv2.polylines (image, left_eye_poly, True, (0,255,255)) 
+cv2. polylines (image, right_eye_poly, True, (0,255,255)) 
+cv2.polylines (image, top_lip_poly, True, (0,255,255)) 
+cv2.polylines (image, bottom_lip_poly, True, (0,255, 255))
+
+crop_image = image[top:bottom,left:right]
+crop_image = cv2.resize(crop_image,None,fx=3,fy=3)
+
+cv2.imshow('image_B6331559',crop_image)
+cv2.waitKey(0)
+cv2.destroyAllWindows
+    
