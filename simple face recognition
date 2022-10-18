@@ -1,0 +1,16 @@
+import face_recognition
+import numpy as np
+import cv2
+
+known_faces = [
+    ('beer','./image/face/beer.jpg'),
+    ('pang','./image/face/pang.jpg'),
+    ('Awesome','./image/face/Awesome.jpg'),
+]
+known_face_names = []
+known_face_encodings = []
+for face in known_faces:
+    known_face_names.append(face[0])
+    face_image = face_recognition.load_image_file(face[1])
+    face_encoding = face_recognition.face_encodings(face_image)[0]
+    known_face_encodings.append(face_encoding)
