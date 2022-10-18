@@ -1,0 +1,27 @@
+image = cv2.imread('./image/face/photo2.jpg') 
+face_locations = face_recognition.face_locations (image) 
+face_encodings = face_recognition.face_encodings(image, face_locations)
+
+face_names = []
+for face_encoding in face_encodings:
+    matches = face_recognition.compare_faces (known_face_encodings, face_encoding) 
+    name = "Unknown"
+    face_distances = face_recognition.face_distance(known_face_encodings, face_encoding)
+    best_match_index = np.argmin(face_distances)
+    if matches[best_match_index] :
+        name = known_face_names[best_match_index] 
+    face_names.append(name) 
+    print(known_face_names, face_distances)
+
+
+    
+for face_location,name in zip(face_locations,face_names):
+    (top,right,bottom,left) = face_location
+    cv2.rectangle(image,(left,top),(right,bottom),(255,0,0),2)
+    font =cv2.FONT_HERSHEY_DUPLEX
+    cv2.putText(image,name,(left + 6 , bottom - 6),font,1.0,(255,255,255),1)
+
+cv2.imshow('image',image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+    
