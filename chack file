@@ -1,0 +1,8 @@
+import face_recognition
+import numpy as np
+import cv2
+
+image = cv2.imread('./image/fah1.jpg')
+face_location = face_recognition.face_locations(image)
+(top,right,bottom,left)=face_location[0]
+print(top,right,bottom,left)
